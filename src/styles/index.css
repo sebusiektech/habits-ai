@@ -45,7 +45,7 @@
 @media (max-height: 480px) and (orientation: landscape) { :root { --tab-h: 48px; } }
 
 * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-html, body, #root { height: 100%; background: var(--bg); }
+html, body, #root { height: 100%; height: 100dvh; background: var(--bg); }
 body { margin: 0; color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.45; -webkit-font-smoothing: antialiased; overflow: hidden; overscroll-behavior: none; -webkit-text-size-adjust: 100%; }
 /* Installed iPhone app: the status bar text is white; in light theme a thin ink band keeps it legible. */
 :root[data-theme="light"] body::before { content: ""; position: fixed; left: 0; right: 0; top: 0; height: var(--sat); background: #000000; z-index: 70; pointer-events: none; }
@@ -55,14 +55,14 @@ h1, h2, h3, p { margin: 0; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 10px; }
 
 /* ---------- shell ---------- */
-.shell { height: 100%; display: flex; }
+.shell { height: 100%; height: 100dvh; min-height: 0; display: flex; }
 .app { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; position: relative; }
 .scroll { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: calc(var(--sat) + 16px) max(18px, var(--sar)) calc(var(--tab-h) + var(--sab) + 96px) max(18px, var(--sal)); }
 .scroll.no-tabs { padding-bottom: calc(var(--sab) + 32px); }
 .page { max-width: 600px; margin: 0 auto; }
 @media (min-width: 768px) { .page { max-width: 720px; } .scroll { padding-top: calc(var(--sat) + 28px); } }
 @media (min-width: 1024px) { .page { max-width: 1040px; } .scroll { padding: 40px 48px 56px; } }
-@keyframes page-in { from { opacity: 0; transform: translate3d(0, 6px, 0); } to { opacity: 1; transform: none; } }
+@keyframes page-in { from { opacity: 0;} to { opacity: 1;} }
 .page-enter { animation: page-in .18s var(--ease); }
 .cols-2 { display: grid; }
 @media (min-width: 1024px) { .cols-2 { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 0 44px; align-items: start; } }
@@ -135,9 +135,9 @@ h1, h2, h3, p { margin: 0; }
 .segmented button.on { background: var(--surface); color: var(--fg); box-shadow: 0 1px 3px rgba(0,0,0,.25); }
 
 /* ---------- mobile tab bar (solid, no blur) ---------- */
-.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; justify-content: center; background: var(--bg-raised); border-top: 1px solid var(--line); padding: 0 var(--sar) var(--sab) var(--sal); }
-.tabbar-inner { width: 100%; max-width: 720px; display: flex; height: var(--tab-h); }
-.tab { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--dim); font-size: 10.5px; font-weight: 700; letter-spacing: .02em; transition: color .15s; }
+.tabbar { position: fixed; inset-inline: 0; bottom: 0; z-index: 20; display: flex; flex: none; justify-content: center; background: var(--bg-raised); border-top: 1px solid var(--line); padding: 0 var(--sar) var(--sab) var(--sal); transform: translateZ(0); }
+.tabbar-inner { width: 100%; max-width: 720px; display: flex; height: var(--tab-h); flex: none; }
+.tab { position: relative; flex: 1 1 0; min-width: 0; height: var(--tab-h); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--dim); font-size: 10.5px; font-weight: 700; letter-spacing: .02em; transition: color .15s; }
 .tab::before { content: ""; position: absolute; top: -1px; left: 50%; width: 30px; height: 3px; margin-left: -15px; border-radius: 0 0 3px 3px; background: var(--accent); transform: scaleX(0); transition: transform .18s var(--ease); }
 .tab.on { color: var(--fg); } .tab.on::before { transform: scaleX(1); } .tab.on svg { color: var(--accent); }
 @media (max-height: 480px) and (orientation: landscape) { .tab { flex-direction: row; gap: 8px; font-size: 12px; } .fab-wrap { display: none; } }
